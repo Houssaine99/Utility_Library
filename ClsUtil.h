@@ -7,7 +7,7 @@ class clsUtil
 {
 public:
 
-	enum enCharType { SmallLetter = 1, CapitalLetter = 2, SpecialCharacter = 3, Digit = 4 };
+	enum enCharType { SmallLetter = 1, CapitalLetter = 2, SpecialCharacter = 3, Digit = 4, MixChars = 5 };
 
 	static void Srand()
 	{
@@ -33,6 +33,8 @@ public:
 			return char(RandomNumber(33, 47));
 		case enCharType::Digit:
 			return char(RandomNumber(48, 57));
+		case enCharType::MixChars:
+			return char(RandomNumber(33, 126));
 		default:
 			return '\0';
 		}
@@ -42,7 +44,7 @@ public:
 	{
 		std::string Word = "";
 
-		for (int i = 1; i <= Length; i++)
+		for (int i = 0; i < Length; i++)
 		{
 			Word = Word + GetRandomCharacter(CharType);
 		}
@@ -50,35 +52,136 @@ public:
 		return Word;
 	}
 
-	static std::string GenerateKey()
+	static std::string GenerateKey(enCharType CharType)
 	{
 		std::string Key = "";
 
-		Key = GenerateWord(enCharType::CapitalLetter, 4) + '-';
-		Key = Key + GenerateWord(enCharType::CapitalLetter, 4) + '-';
-		Key = Key + GenerateWord(enCharType::CapitalLetter, 4) + '-';
-		Key = Key + GenerateWord(enCharType::CapitalLetter, 4);
+		Key = GenerateWord(CharType, 4) + '-';
+		Key = Key + GenerateWord(CharType, 4) + '-';
+		Key = Key + GenerateWord(CharType, 4) + '-';
+		Key = Key + GenerateWord(CharType, 4);
 
 		return Key;
 	}
 
-	static void GenerateKeys(short NumberOfKeys)
+	static void GenerateKeys(short NumberOfKeys, enCharType CharType)
 	{
 		std::cout << std::endl;
 
 		for (int i = 1; i <= NumberOfKeys; i++)
 		{
-			std::cout << "Key [" << i << "] : " << GenerateKey() << std::endl;
+			std::cout << "Key [" << i << "] : " << GenerateKey(CharType) << std::endl;
 		}
 	}
 
-	static void FillArrayWithRandomNumbers(int Arr[100], int ArrayLength)
+	static void Swap(int& NumberA, int& NumberB)
+	{
+		int Temp;
+
+		Temp = NumberA;
+		NumberA = NumberB;
+		NumberB = Temp;
+	}
+
+	static void Swap(double& NumberA, double& NumberB)
+	{
+		double Temp;
+
+		Temp = NumberA;
+		NumberA = NumberB;
+		NumberB = Temp;
+	}
+
+	static void Swap(std::string& StringA, std::string& StringB)
+	{
+		std::string Temp;
+
+		Temp = StringA;
+		StringA = StringB;
+		StringB = Temp;
+	}
+
+	static void Swap(clsDate& DateA, clsDate& DateB)
+	{
+		clsDate Temp;
+
+		Temp = DateA;
+		DateA = DateB;
+		DateB = Temp;
+	}
+
+	static void ShuffleArray(int arr[100], int arrLength)
+	{
+		for (int i = 0; i < arrLength; i++)
+		{
+			Swap(arr[RandomNumber(1, arrLength) - 1], arr[RandomNumber(1, arrLength) - 1]);
+		}
+	}
+
+	static void ShuffleArray(std::string arr[100], int arrLength)
+	{
+		for (int i = 0; i < arrLength; i++)
+		{
+			Swap(arr[RandomNumber(1, arrLength) - 1], arr[RandomNumber(1, arrLength) - 1]);
+		}
+	}
+
+	static void FillArrayWithRandomNumbers(int Arr[100], int ArrayLength, int From, int To)
 	{
 
 		for (int i = 0; i < ArrayLength; i++)
 		{
-			Arr[i] = RandomNumber(1, 100);
+			Arr[i] = RandomNumber(From, To);
 		}
+	}
+
+	static void FillArrayWithRandomWords(std::string arr[100], int arrLength, enCharType CharType, short Length)
+	{
+		for (int i = 0; i < arrLength; i++)
+		{
+			arr[i] = GenerateWord(CharType, Length);
+		}
+	}
+
+	static void FillArrayWithRandomKeys(std::string arr[100], int arrLength, enCharType CharType)
+	{
+		for (int i = 0; i < arrLength; i++)
+		{
+			arr[i] = GenerateKey(CharType);
+		}
+	}
+
+	static std::string Tabs(short NumberOfTabs)
+	{
+		std::string Word = "";
+
+		for (int i = 0; i < NumberOfTabs; i++)
+		{
+			Word += '\t';
+		}
+
+		return Word;
+	}
+
+	static std::string EncryptText(std::string Text, short EncryptionKey)
+	{
+		for (int i = 0; i < Text.length(); i++)
+		{
+
+			Text[i] = char((int)Text[i] + EncryptionKey);
+		}
+
+		return Text;
+	}
+
+	static std::string DecryptText(std::string Text, short EncryptionKey)
+	{
+		for (int i = 0; i < Text.length(); i++)
+		{
+			Text[i] = char((int)Text[i] - EncryptionKey);
+		}
+
+		return Text;
 	}
 };
 

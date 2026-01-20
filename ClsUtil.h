@@ -92,6 +92,24 @@ public:
 		NumberB = Temp;
 	}
 
+	static  void Swap(bool& A, bool& B)
+	{
+		bool Temp;
+
+		Temp = A;
+		A = B;
+		B = Temp;
+	}
+
+	static  void Swap(char& A, char& B)
+	{
+		char Temp;
+
+		Temp = A;
+		A = B;
+		B = Temp;
+	}
+
 	static void Swap(std::string& StringA, std::string& StringB)
 	{
 		std::string Temp;
@@ -151,6 +169,82 @@ public:
 		}
 	}
 
+	static int HowManyTimesNumberIsRepeatedInArray(int Number, int Arr[100], int ArrLength)
+	{
+		int Count = 0;
+
+		for (int i = 0; i < ArrLength; i++)
+		{
+			if (Arr[i] == Number)
+				Count++;
+		}
+
+		return Count;
+	}
+
+	static int MaxNumberInArray(int Arr[100], int ArrLength)
+	{
+		int MaxNumber = 0;
+
+		for (int i = 0; i < ArrLength; i++)
+		{
+			if (Arr[i] > MaxNumber)
+				MaxNumber = Arr[i];
+		}
+
+		return MaxNumber;
+	}
+
+	static int MinNumberInArray(int Arr[100], int ArrLength)
+	{
+		int MinNumber = 0;
+		MinNumber = Arr[0];
+
+		for (int i = 0; i < ArrLength; i++)
+		{
+			if (Arr[i] < MinNumber)
+				MinNumber = Arr[i];
+		}
+
+		return MinNumber;
+	}
+
+	static int SumArray(int Arr[100], int ArrLength)
+	{
+		int Sum = 0;
+
+		for (int i = 0; i < ArrLength; i++)
+		{
+			Sum += Arr[i];
+		}
+
+		return Sum;
+	}
+
+	static float ArrayAverage(int Arr[100], int ArrLength)
+	{
+		return (float)SumArray(Arr, ArrLength) / ArrLength;
+	}
+
+	static void CopyArray(int ArrSource[100], int ArrDestination[100], int ArrLength)
+	{
+		for (int i = 0; i < ArrLength; i++)
+		{
+			ArrDestination[i] = ArrSource[i];
+		}
+	}
+
+	static short FindNumberPositionInArray(int arr[100], int arrLength, int NumberToFind)
+	{
+		for (int i = 0; i < arrLength; i++)
+		{
+			if (arr[i] == NumberToFind)
+				return i;
+		}
+
+		return -1;
+	}
+
 	static std::string Tabs(short NumberOfTabs)
 	{
 		std::string Word = "";
@@ -183,5 +277,6 @@ public:
 
 		return Text;
 	}
+
 };
 
